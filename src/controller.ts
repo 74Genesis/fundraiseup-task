@@ -15,7 +15,6 @@ const ELEMENTS = {
 
 export default class Controller {
   private game: Game;
-  private pause: boolean = false;
 
   constructor() {
     this.startGame();
@@ -110,7 +109,7 @@ export default class Controller {
   }
 
   input(letter: string) {
-    if (!this.pause) this.game.inputLetter(letter);
+    this.game.inputLetter(letter);
   }
 
   renderStatistic() {
