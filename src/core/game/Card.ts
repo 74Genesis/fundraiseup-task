@@ -1,6 +1,6 @@
-import CardStat from './CardStat';
-import WordModel from '../../data/WordModel';
-import Letter from './Letter';
+import CardStat from "./CardStat";
+import WordModel from "../../data/WordModel";
+import Letter from "./Letter";
 
 export interface CardOptions {
   word: WordModel;
@@ -20,23 +20,23 @@ export default class Card {
 
     this.word
       .getShuffled()
-      .split('')
+      .split("")
       .forEach((l) => {
         this.shuffleLetters.push(new Letter(l));
       });
   }
 
   /**
-   * Change card state after input new value.
-   * Returns true if success
+   * Change card state after input a new value.
+   * Returns true on success and false on error
    */
   inputLetter(letter: string): boolean {
-    const payload = this.answerLetters.map((v) => v.letter).join('') + letter;
+    const payload = this.answerLetters.map((v) => v.letter).join("") + letter;
 
     if (this.isMatch(payload)) {
       const index = this.shuffleLetters.map((v) => v.letter).indexOf(letter);
       this.shuffleLetters = this.shuffleLetters.filter((v, i) => i !== index);
-      this.answerLetters.push(new Letter(letter, 'success'));
+      this.answerLetters.push(new Letter(letter, "success"));
       return true;
     } else {
       this.stat.addError();
@@ -49,23 +49,23 @@ export default class Card {
    */
   getNextLetter(): string {
     const word = this.word.getWord();
-    return word?.[this.answerLetters.length] || '';
+    return word?.[this.answerLetters.length] || "";
   }
 
   showRightAnser() {
     this.answerLetters = [];
     this.word
       .getWord()
-      .split('')
+      .split("")
       .forEach((v) => {
-        this.answerLetters.push(new Letter(v, 'danger'));
+        this.answerLetters.push(new Letter(v, "danger"));
       });
     this.shuffleLetters = [];
   }
 
   isCompleted() {
     return (
-      this.word.getWord() === this.answerLetters.map((v) => v.letter).join('')
+      this.word.getWord() === this.answerLetters.map((v) => v.letter).join("")
     );
   }
 
@@ -75,6 +75,6 @@ export default class Card {
 
   //is payload matching the word (from beginning of )
   isMatch(payload: string) {
-    return !!this.word.getWord().match(new RegExp('^' + payload));
+    return !!this.word.getWord().match(new RegExp("^" + payload));
   }
 }

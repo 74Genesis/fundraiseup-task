@@ -1,5 +1,4 @@
 import Game from "./Game";
-import Card from "./Card";
 
 export default class GameStat {
   private game: Game;
